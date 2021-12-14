@@ -5,10 +5,6 @@ const	generatePaths = function generatePaths(nodeValue: string, path: Array<Node
 	const nodeIndex = nodes.findIndex((node) => node.value === nodeValue)
 	const node = nodes[nodeIndex]
 	console.log(`Generate path for node ${nodeValue} with path ${path.map(node => node.value)}`)
-	// console.log(node)
-	// path.add(node)
-
-	// node.children.forEach()
 	path.push(node)
 	if (nodeValue === 'end') {
 		validPaths.push([...path])
@@ -19,14 +15,6 @@ const	generatePaths = function generatePaths(nodeValue: string, path: Array<Node
 				generatePaths(cave, [...path])
 			} else if (!isSmallCave(cave)) {
 				generatePaths(cave, [...path])
-			}
-			// if (!isSmallCave(cave)) {
-			// 	console.log('traversing to large cave', nodeValue, cave)
-			// 	generatePaths(cave, [...path])
-			// } else if (!pathContainsNode([...path], cave)) {
-			// 	console.log('traversing to cave', nodeValue, cave.value)
-			// 	generatePaths(cave, [...path])
-			// }
 		}
 	}
 }
@@ -83,24 +71,7 @@ module.exports = class ProblemSolver {
 		generatePaths(start.value, [])
 		console.log(validPaths)
 		this.answer = validPaths.length
-		
-		// find paths
   }
-
-
-
-	// navigatePath(a: Node, b: Node, path: Array<Node>): Array<Node> {
-	// 	if (b.node.value === 'end') {
-	// 		path.push(b)
-	// 		this.validPaths.push(path)
-	// 		return path
-	// 	} else if (a.isSmallCave() && b.isSmallCave()) {
-	// 		// invalid, can't navigate
-	// 	} else if (this.pathContainsNode(b) && b.isSmallCave()) {
-	// 		// invalid, can't navigate
-	// 	} else if ()
-	// }
-
 
 }
 
