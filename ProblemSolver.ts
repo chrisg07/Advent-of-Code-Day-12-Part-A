@@ -4,29 +4,35 @@ let nodes = new Array<Node>()
 const	generatePaths = function generatePaths(nodeValue: string, path: Array<Node>): void {
 	const nodeIndex = nodes.findIndex((node) => node.value === nodeValue)
 	const node = nodes[nodeIndex]
-	console.log(`Generate path for node ${node.value} with path ${path.map(node => node.value)}`)
+	console.log(`Generate path for node ${nodeValue} with path ${path.map(node => node.value)}`)
 	// console.log(node)
 	// path.add(node)
 
 	// node.children.forEach()
 	path.push(node)
-	if (node.value === 'end') {
+	if (nodeValue === 'end') {
 		validPaths.push([...path])
 	} else {
 		for (const cave of node.adjacencyList) {
-			if (!isSmallCave(cave)) {
-				console.log('traversing to large cave', node.value, cave)
+			if (!pathContainsNode([...path], cave)) {
+				console.log('traversing to cave', nodeValue, cave)
 				generatePaths(cave, [...path])
-			} else if (!pathContainsNode([...path], cave)) {
-				console.log('traversing to cave', node.value, cave.value)
+			} else if (!isSmallCave(cave)) {
 				generatePaths(cave, [...path])
 			}
+			// if (!isSmallCave(cave)) {
+			// 	console.log('traversing to large cave', nodeValue, cave)
+			// 	generatePaths(cave, [...path])
+			// } else if (!pathContainsNode([...path], cave)) {
+			// 	console.log('traversing to cave', nodeValue, cave.value)
+			// 	generatePaths(cave, [...path])
+			// }
 		}
 	}
 }
 
-const	pathContainsNode = function pathContainsNode(path: Array<Node>, nodeToFind: Node): boolean {
-	const index = path.findIndex((node) => node.value === nodeToFind.value)
+const	pathContainsNode = function pathContainsNode(path: Array<Node>, nodeToFind: string): boolean {
+	const index = path.findIndex((node) => node.value === nodeToFind)
 	return index >= 0
 }
 
@@ -74,8 +80,9 @@ module.exports = class ProblemSolver {
 		console.log(nodes)
 		const startIndex = nodes.findIndex((node) => node.value === 'start')
 		const start = nodes[startIndex]
-		generatePaths(start, [])
+		generatePaths(start.value, [])
 		console.log(validPaths)
+		this.answer = validPaths.length
 		
 		// find paths
   }
@@ -105,7 +112,7 @@ class Node {
 		this.value = value
 	}
 
-	addNode(node: string) {
-		this.adjacencyList.push(node.value)
+	addNode(value: string) {
+		this.adjacencyList.push(value)
 	}
 }
