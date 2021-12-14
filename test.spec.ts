@@ -22,7 +22,7 @@ describe('ProblemSolver', function() {
 	
 	it('reads input and number of paths', function(done) {
 		problemSolver = new ProblemSolver(lines);
-		assert.equal(problemSolver.answer, 10)
+		assert.equal(problemSolver.answer, 3509)
 		done()
 	})
 });
